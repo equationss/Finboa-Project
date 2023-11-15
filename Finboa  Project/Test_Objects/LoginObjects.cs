@@ -12,11 +12,17 @@ namespace Finboa__Project.Test_Objects
 {
     public class LoginObjects : Base
     {
+        private string baseUrl = ConfigurationReader.BaseUrl;
+
+
         By EmailField = By.XPath("//input[@type='email']");
         By PasswordField = By.XPath("//input[@type='password']");
         By LoginBtn = By.XPath("//button[text()='Login']");
         public void login(string Email, string Password)
         {
+            driver.Navigate().GoToUrl(baseUrl);
+            driver.Manage().Window.Maximize();
+
             FindElement(EmailField);
             SendKeys(EmailField, Email);
             FindElement(PasswordField);

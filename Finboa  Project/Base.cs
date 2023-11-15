@@ -23,14 +23,10 @@ namespace Finboa__Project
                 options.AddArguments("--disable-notifications");
                 driver = new ChromeDriver(options);
 
-                driver.Url = "https://disputedev.azurewebsites.net/#/login";
-                driver.Manage().Window.Maximize();
             }
             if (browser == "FireFox")
             {
                 driver = new FirefoxDriver();
-                driver.Url = "https://disputedev.azurewebsites.net/#/login";
-                driver.Manage().Window.Maximize();
             }
             return driver;
         }
