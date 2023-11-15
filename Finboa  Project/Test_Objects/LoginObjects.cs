@@ -34,5 +34,25 @@ namespace Finboa__Project.Test_Objects
             Assert.AreEqual("The user name or password is incorrect.", errorMessageText);
 
         }
+
+        public void EmptyFieldsValidate()
+        {
+
+            IWebElement errorMessage = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(ExpectedConditions.ElementIsVisible(By.XPath("//p[text()='Enter a valid email.']")));
+            string errorMessageText = errorMessage.Text;
+            Console.WriteLine(errorMessageText);
+            Assert.AreEqual("Enter a valid email.", errorMessageText);
+
+        }
+
+        public void OnlyEmailValidate()
+        {
+
+            IWebElement errorMessage = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(ExpectedConditions.ElementIsVisible(By.XPath("//h2[text()='Login']")));
+          
+
+        }
     }
 }
