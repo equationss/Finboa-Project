@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Finboa__Project.Test_Methods
 {
     [TestClass]
-    public class ValidLogin : Base
+    public class ValidEmail : Base
     {
         public TestContext TestContext { get; set; }
 
@@ -18,14 +18,15 @@ namespace Finboa__Project.Test_Methods
 
         [TestMethod]
 
-        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "Credentials.xml", "Valid", DataAccessMethod.Sequential)]
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "Credentials.xml", "ValidEmail", DataAccessMethod.Sequential)]
 
-        public void Valid_Login()
+        public void Valid_Email()
         {
             string username = TestContext.DataRow["username"].ToString();
             string password = TestContext.DataRow["password"].ToString();
             Driver("FireFox");
             Object.login(username, password);
+            Object.InvalidloginValidate();
             Close();
 
         }

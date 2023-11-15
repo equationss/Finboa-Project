@@ -17,12 +17,16 @@ namespace Finboa__Project.Test_Methods
         LoginObjects Object = new LoginObjects();
 
         [TestMethod]
+
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML", "Credentials.xml", "Invalid", DataAccessMethod.Sequential)]
+
         public void Invalid_Login()
         {
-
+            string username = TestContext.DataRow["username"].ToString();
+            string password = TestContext.DataRow["password"].ToString();
             Driver("FireFox");
-            Object.login("abdul@finboa.com", "Password");
-            //Object.InvalidloginValidate();
+            Object.login(username, password);
+            Object.InvalidloginValidate();
             Close();
 
         }

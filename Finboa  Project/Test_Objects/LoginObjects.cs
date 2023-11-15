@@ -27,15 +27,11 @@ namespace Finboa__Project.Test_Objects
         public void InvalidloginValidate()
         {
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.AlertIsPresent());
-            IAlert alert = driver.SwitchTo().Alert();
-            string alertText = alert.Text;
-            Console.WriteLine("Alert text: " + alertText);
-
-            //IWebElement errorMessage = wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[contains(@class,'alert alert-danger')]")));
-            //string errorMessageText = errorMessage.Text;
-            //Console.WriteLine("Error message: " + errorMessageText);
+            IWebElement errorMessage = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(ExpectedConditions.ElementIsVisible(By.XPath("//div[contains(@class,'alert alert-danger')]")));
+            string errorMessageText = errorMessage.Text;
+            Console.WriteLine(errorMessageText);
+            Assert.AreEqual("The user name or password is incorrect.", errorMessageText);
 
         }
     }
