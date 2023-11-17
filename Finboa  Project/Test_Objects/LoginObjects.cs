@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace Finboa__Project.Test_Objects
 {
@@ -18,6 +19,8 @@ namespace Finboa__Project.Test_Objects
         By EmailField = By.XPath("//input[@type='email']");
         By PasswordField = By.XPath("//input[@type='password']");
         By LoginBtn = By.XPath("//button[text()='Login']");
+        By OTP = By.Id("otp");
+        By Auth = By.XPath("(//button[@type='button'])[3]");
         public void login(string Email, string Password)
         {
             driver.Navigate().GoToUrl(baseUrl);
@@ -58,6 +61,25 @@ namespace Finboa__Project.Test_Objects
             IWebElement errorMessage = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
             .Until(ExpectedConditions.ElementIsVisible(By.XPath("//h2[text()='Login']")));
           
+
+        }
+
+        public void Otp(string otp)
+        {
+            FindElement(OTP);
+            SendKeys(OTP, otp);
+            ClickElement(Auth);
+        }
+
+       public void ValidLoginValidate() 
+        {
+
+            IWebElement Message = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            .Until(ExpectedConditions.ElementIsVisible(By.XPath("//h3[text()='Dashboard']")));
+            string MessageText = Message.Text;
+            Console.WriteLine(MessageText);
+            Assert.AreEqual("Dashboard", MessageText);
+
 
         }
     }

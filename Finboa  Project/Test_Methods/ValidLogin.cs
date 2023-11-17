@@ -30,18 +30,17 @@ namespace Finboa__Project.Test_Methods
             string password = TestContext.DataRow["password"].ToString();
             Driver("FireFox");
             Object.login(username, password);
-            //Close();
 
-            // Retrieve OTP from Gmail
             string host = "imap.gmail.com";
             int port = 993;
             string email = "abdul@finboa.com";
-            string gmailPassword = "$Pak35tan$2023";
+            string gmailPassword = "$Pak35tan$2033";
+
+            Thread.Sleep(10000);
 
             var otpProcessor = new OtpProcessor();
             var otp = otpProcessor.FetchOTPFromEmail(host, port, email, gmailPassword);
 
-            // Print or use the OTP as needed
             if (!string.IsNullOrEmpty(otp))
             {
                 Console.WriteLine($"OTP: {otp}");
@@ -51,8 +50,10 @@ namespace Finboa__Project.Test_Methods
                 Console.WriteLine("No OTP found.");
             }
 
-            Thread.Sleep(10000);
-            // Close the browser
+            Object.Otp(otp);
+
+            Object.ValidLoginValidate();
+
             Close();
         }
     }

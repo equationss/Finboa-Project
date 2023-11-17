@@ -1,8 +1,10 @@
-﻿using MailKit.Net.Imap;
+﻿using MailKit;
+using MailKit.Net.Imap;
 using MailKit.Search;
 using MimeKit;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public class OtpProcessor
 {
@@ -25,10 +27,39 @@ public class OtpProcessor
                 return null;
             }
 
-            var message = inbox.GetMessage(uids.First());
-            var otp = message.TextBody;
+            var summaries = inbox.Fetch(uids, MessageSummaryItems.Envelope | MessageSummaryItems.UniqueId | MessageSummaryItems.Flags | MessageSummaryItems.BodyStructure);
+
+            var latestSummary = summaries.OrderByDescending(summary => summary.Envelope.Date).FirstOrDefault();
+
+            if (latestSummary == null)
+            {
+                Console.WriteLine("Error retrieving messages.");
+                return null;
+            }
+
+            var latestMessage = inbox.GetMessage(latestSummary.UniqueId);
+            var otp = ExtractVerificationCode(latestMessage);
 
             return otp;
         }
+    }
+
+    private string ExtractVerificationCode(MimeMessage message)
+    {
+        if (message == null)
+        {
+            Console.WriteLine("Message is null.");
+            return null;
+        }
+
+        // Try to extract the verification code using a regular expression from HTMLBody
+        var matchHtml = Regex.Match(message.HtmlBody ?? string.Empty, @"\b\d{6}\b");
+        if (matchHtml.Success)
+        {
+            return matchHtml.Value;
+        }
+
+        Console.WriteLine("Verification code not found in the message.");
+        return null;
     }
 }
