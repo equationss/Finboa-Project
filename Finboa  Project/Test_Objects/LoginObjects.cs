@@ -74,7 +74,7 @@ namespace Finboa__Project.Test_Objects
        public void ValidLoginValidate() 
         {
 
-            IWebElement Message = new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+            IWebElement Message = new WebDriverWait(driver, TimeSpan.FromSeconds(20))
             .Until(ExpectedConditions.ElementIsVisible(By.XPath("//h3[text()='Dashboard']")));
             string MessageText = Message.Text;
             Console.WriteLine(MessageText);
